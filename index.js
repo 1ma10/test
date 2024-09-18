@@ -1,8 +1,7 @@
 const express = require('express');
 const { Client } = require('discord.js-selfbot-v13');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-
-
+const { JSDOM } = require('jsdom'); // HTML parsing library
 
 // Setup Express server
 const app = express();
@@ -24,9 +23,10 @@ if (!mySecret) {
   process.exit(1); // Exit if the token is not found
 }
 
-const channelId = '630777266187534347';
-
+const channelId = '1130235918251479152';
 const baseUrl = 'https://minestrator.com/panel/action.php?action=codecadeau';
+const tokenUrl = 'https://minestrator.com/panel/code/cadeau';
+
 const headers = {
   'Host': 'minestrator.com',
   'Connection': 'keep-alive',
@@ -48,11 +48,34 @@ const headers = {
   'Cookie': 'SOCS=CAISNQgQEitib3FfaWRlbnRpdHlmcm9udGVuZHVpc2VydmVyXzIwMjQwNTE0LjA2X3AwGgJmaSADGgYIgOu0sgY; minesr_id=233995; __stripe_mid=ba5bf74b-3a9c-415b-bc4b-1f1df9c0c7dcc78a2d; PHPSESSID=fapcc2u8pgtc7chcpr47er8ve8; language=fr; minesr_tk=HUrSRjHDDxyRtBbGQL5vTPhDVcyCDLkv; __stripe_sid=43db6215-fb88-4072-8efb-2f132d184cb9b160b7'
 };
 
-// Function to make a POST request
-const makeRequest = async (code) => {
-  const data = `code=${encodeURIComponent(code)}&token=e47ba52928459c2e40eab9ce7eceac8a`;
+// Function to get the token from the token URL
+const getToken = async () => {
+  try {
+    // Perform GET request with custom headers
+    const response = await fetch(tokenUrl, { method: 'GET', headers });
+    const html = await response.text();
+   
+
+    // Proceed with extracting the token
+    const dom = new JSDOM(html);
+    const tokenInput = dom.window.document.querySelector('input[name="token"]');
+    if (tokenInput) {
+      return tokenInput.value;
+    } else {
+      throw new Error('Token input field not found in the HTML.');
+    }
+  } catch (error) {
+    console.error('Error fetching token:', error);
+    throw error;
+  }
+};
+
+// Function to make a POST request with a specific code and token
+const makeRequest = async (code, token) => {
+  const data = `code=${encodeURIComponent(code)}&token=${encodeURIComponent(token)}`;
 
   try {
+    // Make the POST request
     const response = await fetch(baseUrl, {
       method: 'POST',
       headers: headers,
@@ -64,6 +87,9 @@ const makeRequest = async (code) => {
     console.error(`Error making request for code ${code}:`, error);
   }
 };
+
+// Helper function to wait for a given number of milliseconds
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Handle messages and extract codes
 const client = new Client();
@@ -84,8 +110,13 @@ client.on('ready', async () => {
 
     console.log(`Listening for messages containing the specific phrase in channel: ${channel.name}`);
 
-    collector.on('collect', (message) => {
+    collector.on('collect', async (message) => {
       console.log(`Collected message from ${message.author.username}: ${message.content}`);
+
+      // Introduce a random delay between 3 and 8 seconds
+      const delay = Math.floor(Math.random() * (8000 - 3000 + 1)) + 3000;
+      console.log(`Waiting for ${delay / 1000} seconds before processing...`);
+      await wait(delay);
 
       // Regular expression to match and extract code blocks
       const codeRegex = /\|\|([A-Za-z0-9\-]+)\|\|/g;
@@ -93,10 +124,12 @@ client.on('ready', async () => {
 
       if (matches.length > 0) {
         console.log("Extracted code blocks:");
-        matches.slice(0, 5).forEach(async (code, index) => {
+        const token = await getToken(); // Fetch the token
+
+        for (const [index, code] of matches.slice(0, 5).entries()) {
           console.log(`${index + 1}: ${code}`);
-          await makeRequest(code); // Make request for each code
-        });
+          await makeRequest(code, token); // Make request for each code
+        }
       } else {
         console.log("No code blocks found in the message.");
       }
