@@ -1,6 +1,20 @@
+const express = require('express');
 const { Client } = require('discord.js-selfbot-v13');
+const fetch = require('node-fetch'); // Import fetch directly for usage
 
-// Load the token from the environment variable 'sa'
+// Setup Express server
+const app = express();
+const port = process.env.PORT || 4000;
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+
+// Setup Discord bot client
 const mySecret = process.env['sa'];
 
 if (!mySecret) {
@@ -8,10 +22,8 @@ if (!mySecret) {
   process.exit(1); // Exit if the token is not found
 }
 
-// Specify the channel ID where you want to listen for messages
 const channelId = '630777266187534347';
 
-// Base URL and headers for the POST request
 const baseUrl = 'https://minestrator.com/panel/action.php?action=codecadeau';
 const headers = {
   'Host': 'minestrator.com',
@@ -39,12 +51,10 @@ const makeRequest = async (code) => {
   const data = `code=${encodeURIComponent(code)}&token=e47ba52928459c2e40eab9ce7eceac8a`;
 
   try {
-    const fetch = (await import('node-fetch')).default;
     const response = await fetch(baseUrl, {
       method: 'POST',
       headers: headers,
-      body: data,
-      // Proxy is set via environment variable if needed
+      body: data
     });
     const result = await response.text(); // or response.json() if the response is JSON
     console.log(`Response for code ${code}: ${result}`);
