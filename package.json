@@ -1,7 +1,7 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Node.js project that integrates an Express server with a Discord bot.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^18.0.6",
+    "express": "^4.18.2",
     "discord.js-selfbot-v13": "^3.4.0",
     "node-fetch": "^3.3.2"
   }
