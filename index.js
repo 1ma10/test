@@ -1,6 +1,8 @@
 const express = require('express');
 const { Client } = require('discord.js-selfbot-v13');
-const fetch = require('node-fetch'); // Import fetch directly for usage
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
+
 
 // Setup Express server
 const app = express();
