@@ -9,7 +9,7 @@ if (!mySecret) {
 }
 
 // Specify the channel ID where you want to listen for messages
-const channelId = '1130235918251479152';
+const channelId = '630777266187534347';
 
 // Base URL and headers for the POST request
 const baseUrl = 'https://minestrator.com/panel/action.php?action=codecadeau';
