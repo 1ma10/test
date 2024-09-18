@@ -23,7 +23,7 @@ if (!mySecret) {
   process.exit(1); // Exit if the token is not found
 }
 
-const channelId = '1130235918251479152';
+const channelId = '630777266187534347';
 const baseUrl = 'https://minestrator.com/panel/action.php?action=codecadeau';
 const tokenUrl = 'https://minestrator.com/panel/code/cadeau';
 
