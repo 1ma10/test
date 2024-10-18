@@ -45,7 +45,7 @@ const headers = {
   'Pragma': 'no-cache',
   'Cache-Control': 'no-cache',
   'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-  'Cookie': 'SOCS=CAISNQgQEitib3FfaWRlbnRpdHlmcm9udGVuZHVpc2VydmVyXzIwMjQwNTE0LjA2X3AwGgJmaSADGgYIgOu0sgY; minesr_id=233995; __stripe_mid=ba5bf74b-3a9c-415b-bc4b-1f1df9c0c7dcc78a2d; minesr_tk=HUrSRjHDDxyRtBbGQL5vTPhDVcyCDLkv; PHPSESSID=mihn71b3me7ofhaqp14h2l0to0; cf_checks=aqSOCS=CAISNQgQEitib3FfaWRlbnRpdHlmcm9udGVuZHVpc2VydmVyXzIwMjQwNTE0LjA2X3AwGgJmaSADGgYIgOu0sgY; minesr_id=233995; __stripe_mid=ba5bf74b-3a9c-415b-bc4b-1f1df9c0c7dcc78a2d; minesr_tk=HUrSRjHDDxyRtBbGQL5vTPhDVcyCDLkv; PHPSESSID=mihn71b3me7ofhaqp14h2l0to0; cf_checks=aqSmaq; __stripe_sid=efb5c05c-80cf-4f16-aa80-de348bff9d79dae18a0532; __stripe_sid=efb5c05c-80cf-4f16-aa80-de348bff9d79dae18a'
+  'Cookie': 'SOCS=CAISNQgQEitib3FfaWRlbnRpdHlmcm9udGVuZHVpc2VydmVyXzIwMjQwNTE0LjA2X3AwGgJmaSADGgYIgOu0sgY; minesr_id=233995;  PHPSESSID=mihn71b3me7ofhaqp14h2l0to0; cf_checks=aqSOCS=CAISNQgQEitib3FfaWRlbnRpdHlmcm9udGVuZHVpc2VydmVyXzIwMjQwNTE0LjA2X3AwGgJmaSADGgYIgOu0sgY; minesr_id=233995; __stripe_mid=ba5bf74b-3a9c-415b-bc4b-1f1df9c0c7dcc78a2d; minesr_tk=HUrSRjHDDxyRtBbGQL5vTPhDVcyCDLkv; PHPSESSID=mihn71b3me7ofhaqp14h2l0to0; cf_checks=aqSmaq'
 };
 
 // Function to get the token from the token URL
